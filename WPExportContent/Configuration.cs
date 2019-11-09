@@ -24,9 +24,15 @@ namespace WPExportContent
         }
 
 
-        public static WPSourceDTO GetWPSourceDTO()
+        public static WPConfigurationSourceDTO GetWPSourceDTO()
         {
-            WPSourceDTO result = ConfigurationRoot.GetSection("WPSource").Get<WPSourceDTO>();
+            WPConfigurationSourceDTO result = ConfigurationRoot.GetSection("WPSource").Get<WPConfigurationSourceDTO>();
+            return result;
+        }
+
+        public static WPConfigurationOUTFileDTO GetOUTFileDTO()
+        {
+            WPConfigurationOUTFileDTO result = ConfigurationRoot.GetSection("OUTFile").Get<WPConfigurationOUTFileDTO>();
             return result;
         }
 
