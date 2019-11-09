@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using WPExportContent.Core.DTO;
 using WPExportContent.Core.DTO.Output;
 
 namespace WPExportContent.Core.WordPress

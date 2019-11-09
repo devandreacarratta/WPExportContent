@@ -9,7 +9,7 @@ namespace WPExportContent.Core.DTO.Output
 
         public List<long> Categories { get; set; } = new List<long>();
         public List<long> Tags { get; set; } = new List<long>();
-        public long post_author { get; set; } // ToDo
+        public long PostAuthor { get; set; }
         public DateTime PostDate { get; set; }
         public DateTime PostDateGTM { get; set; }
         public string PostContent { get; set; }

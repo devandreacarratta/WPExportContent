@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WPExportContent.Core.DTO.Output
+﻿namespace WPExportContent.Core.DTO.Output
 {
     public class CategoryDTO: BaseOutputDTO
     {

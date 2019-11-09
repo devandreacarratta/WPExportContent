@@ -14,6 +14,7 @@ namespace WPExportContent.Core.Mappings
             var configuration = new MapperConfiguration(cfg =>
                 cfg.CreateMap<WPPostDTO, PostDTO>()
                     .ForMember(dest => dest.ID, opt => opt.MapFrom(src => src.ID))
+                    .ForMember(dest => dest.PostAuthor, opt => opt.MapFrom(src => src.post_author))
                     .ForMember(dest => dest.PostDate, opt => opt.MapFrom(src => src.post_date))
                     .ForMember(dest => dest.PostDateGTM, opt => opt.MapFrom(src => src.post_date_gmt))
                     .ForMember(dest => dest.PostContent, opt => opt.MapFrom(src => src.post_content))
@@ -35,6 +36,7 @@ namespace WPExportContent.Core.Mappings
                     .ForMember(dest => dest.PostType, opt => opt.MapFrom(src => src.post_type))
                     .ForMember(dest => dest.PostMimeType, opt => opt.MapFrom(src => src.post_mime_type))
                     .ForMember(dest => dest.CommentCount, opt => opt.MapFrom(src => src.comment_count))
+
             );
             this._mapper = new Mapper(configuration);
         }
