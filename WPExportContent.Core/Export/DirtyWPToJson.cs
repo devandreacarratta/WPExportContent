@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using WPExportContent.Core.DTO;
+﻿using System.IO;
 using WPExportContent.Core.WordPress;
 
 namespace WPExportContent.Core.Export

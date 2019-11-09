@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WPExportContent.Core.DTO
+﻿namespace WPExportContent.Core.DTO
 {
     public class WPTagDTO
     {

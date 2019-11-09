@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WPExportContent
+﻿namespace WPExportContent
 {
     class Program
     {

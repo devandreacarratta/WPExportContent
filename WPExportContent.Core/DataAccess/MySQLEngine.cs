@@ -1,10 +1,7 @@
-﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections;
+﻿using Dapper;
+using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Data;
-using WPExportContent.Core.DTO;
-using Dapper;
 
 namespace WPExportContent.Core.DataAccess
 {
