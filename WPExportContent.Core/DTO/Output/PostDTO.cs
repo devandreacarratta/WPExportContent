@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WPExportContent.Core.DTO.Output
 {
-    public class PostDTO
+    public class PostDTO : BaseOutputDTO
     {
         public long ID { get; set; }
 

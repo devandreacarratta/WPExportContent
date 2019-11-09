@@ -1,6 +1,8 @@
-﻿namespace WPExportContent.Core.DTO.Output
+﻿using System;
+
+namespace WPExportContent.Core.DTO.Output
 {
-    public class CategoryDTO
+    public class CategoryDTO: BaseOutputDTO
     {
         public long ID { get; set; }
         public string Name { get; set; }
