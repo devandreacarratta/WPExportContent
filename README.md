@@ -2,6 +2,9 @@
 Export Content From WP 
 
 ## appsettings.json
+
+```
+
 {
 	"WPSource": {
 		"DB_NAME": "wpexportcontent",
@@ -16,5 +19,7 @@ Export Content From WP
 	}
 
 }
+
 ```
+
 The appsettings.json values are fake (just to write something ...)
