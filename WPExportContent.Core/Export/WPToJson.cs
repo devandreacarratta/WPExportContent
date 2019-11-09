@@ -1,18 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using WPExportContent.Core.DTO;
 using WPExportContent.Core.DTO.Output;
+using WPExportContent.Core.WordPress;
 
 namespace WPExportContent.Core.Export
 {
     public class WPToJson : BaseWPExportData
     {
-
-        private List<CategoryDTO> _categories = null;
-
-        private List<TagDTO> _tags = null;
-
-        private List<PostDTO> _posts = null;
         public WPToJson():base()
         {
         
@@ -20,9 +16,19 @@ namespace WPExportContent.Core.Export
 
         public void Run(string outFile)
         {
-            _categories = FillCategories();
-            _tags = FillTags();
-            _posts = FillPosts();
+            WPExportResult export = new WPExportResult();
+            export.Categories = FillCategories();
+            export.Tags = FillTags();
+            export.Posts = FillPosts();
+
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(export, Newtonsoft.Json.Formatting.Indented);
+            File.Delete(outFile);
+            File.WriteAllText(outFile, json);
+
+            outFile = outFile.Replace(".json", ".min.json");
+            json = Newtonsoft.Json.JsonConvert.SerializeObject(export, Newtonsoft.Json.Formatting.None);
+            File.Delete(outFile);
+            File.WriteAllText(outFile, json);
         }
 
         private List<PostDTO> FillPosts()
@@ -78,15 +84,9 @@ namespace WPExportContent.Core.Export
                     continue;
                 }
 
-                TagDTO tag = new TagDTO()
-                {
-                    ID = item.term_id,
-                    Name = item.name,
-                    Slug = item.slug
-                };
+                TagDTO tag = this.MapperTag.Map<WPTagDTO, TagDTO>(item);
 
                 result.Add(tag);
-
             }
 
             return result;
@@ -108,12 +108,7 @@ namespace WPExportContent.Core.Export
                     continue;
                 }
 
-                CategoryDTO category = new CategoryDTO()
-                {
-                    ID = item.term_id,
-                    Name = item.name,
-                    Slug = item.slug
-                };
+                CategoryDTO category = this.MapperCategory.Map<WPCategoryDTO, CategoryDTO>(item);
 
                 result.Add(category);
 

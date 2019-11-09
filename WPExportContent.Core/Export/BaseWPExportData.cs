@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
 using WPExportContent.Core.DTO;
+using WPExportContent.Core.Mappings;
 
 namespace WPExportContent.Core.Export
 {
@@ -11,12 +12,20 @@ namespace WPExportContent.Core.Export
         public IEnumerable<WPCategoryDTO> Categories;
 
         protected IMapper MapperPost = null;
+        protected IMapper MapperCategory = null;
+        protected IMapper MapperTag = null;
 
 
         public BaseWPExportData()
         {
-            Mappings.MappingPost post = new Mappings.MappingPost();
-            this.MapperPost = post.Get;
+            MappingPost mappingPost = new MappingPost();
+            this.MapperPost = mappingPost.Get;
+
+            MappingCategory mappingCategory = new MappingCategory();
+            this.MapperCategory = mappingCategory.Get;
+
+            MappingTag mappingTag = new MappingTag();
+            this.MapperTag = mappingTag.Get;
         }
     }
 }

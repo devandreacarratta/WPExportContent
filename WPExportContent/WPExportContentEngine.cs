@@ -49,7 +49,7 @@ namespace WPExportContent
                 Tags = tags,
                 Posts = posts
             };
-            wPToJson.Run(_configurationOUTFile.DirtyExportFile);
+            wPToJson.Run(_configurationOUTFile.ExportFile);
 
         }
 
