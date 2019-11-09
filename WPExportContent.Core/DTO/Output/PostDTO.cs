@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace WPExportContent.Core.DTO.Output
 {
@@ -8,8 +7,8 @@ namespace WPExportContent.Core.DTO.Output
     {
         public long ID { get; set; }
 
-        public List<long> Categories { get; set; }
-        public List<long> Tags { get; set; }
+        public List<long> Categories { get; set; } = new List<long>();
+        public List<long> Tags { get; set; } = new List<long>();
         public long post_author { get; set; } // ToDo
         public DateTime PostDate { get; set; }
         public DateTime PostDateGTM { get; set; }

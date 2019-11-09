@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WPExportContent.Core.DTO.Output
+﻿namespace WPExportContent.Core.DTO.Output
 {
     public class CategoryDTO
     {
