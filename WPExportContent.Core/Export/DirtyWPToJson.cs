@@ -1,10 +1,13 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using WPExportContent.Core.DTO;
 using WPExportContent.Core.WordPress;
 
 namespace WPExportContent.Core.Export
 {
     public class DirtyWPToJson: BaseWPExportData
     {
+
 
         public void Run(string outFile)
         {
