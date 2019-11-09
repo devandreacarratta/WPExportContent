@@ -6,13 +6,15 @@ namespace WPExportContent.Core.Export
     public class DirtyWPToJson: BaseWPExportData
     {
 
+
         public void Run(string outFile)
         {
             WPDirtyExportResult dirtyExport = new WPDirtyExportResult()
             {
                 Categories = this.Categories,
                 Posts = this.Posts,
-                Tags = this.Tags
+                Tags = this.Tags,
+                Users = this.Users
             };
 
             string dirtyExportJson = Newtonsoft.Json.JsonConvert.SerializeObject(dirtyExport, Newtonsoft.Json.Formatting.Indented);

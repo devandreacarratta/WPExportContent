@@ -34,16 +34,24 @@ namespace WPExportContent
             var posts = mySQLEngine.Select<WPPostDTO>(_wpQuery.GetWPPosts);
             var tags = mySQLEngine.Select<WPTagDTO>(_wpQuery.GetWPTags);
             var category = mySQLEngine.Select<WPCategoryDTO>(_wpQuery.GetWPCategories);
+            var users = mySQLEngine.Select<WPUserDTO>(_wpQuery.GetWPUsers);
 
-            DirtyWPToJson dirtyWPToJson = new DirtyWPToJson()
+            //DirtyWPToJson dirtyWPToJson = new DirtyWPToJson()
+            //{
+            //    Categories = category,
+            //    Tags = tags,
+            //    Posts = posts
+            //};
+            //dirtyWPToJson.Run(_configurationOUTFile.DirtyExportFile);
+
+            WPToJson wPToJson = new WPToJson()
             {
                 Categories = category,
                 Tags = tags,
-                Posts = posts
+                Posts = posts,
+                Users = users
             };
-            dirtyWPToJson.Run(_configurationOUTFile.DirtyExportFile);
-
-
+            wPToJson.Run(_configurationOUTFile.ExportFile);
 
         }
 
