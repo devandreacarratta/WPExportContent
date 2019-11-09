@@ -6,7 +6,8 @@ namespace WPExportContent
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            WPExportContentEngine engine = new WPExportContentEngine();
+            engine.DoWork();
         }
     }
 }
