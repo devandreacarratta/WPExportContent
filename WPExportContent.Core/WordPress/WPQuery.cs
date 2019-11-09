@@ -18,6 +18,15 @@
             }
         }
 
+        public string GetWPUsers
+        {
+            get
+            {
+                string result = $@"SELECT * FROM {_tablePrefix}users";
+                return result;
+            }
+        }
+
         public string GetWPTags
         {
             get

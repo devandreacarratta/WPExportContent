@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using WPExportContent.Core.DTO;
@@ -20,6 +21,7 @@ namespace WPExportContent.Core.Export
             export.Categories = FillCategories();
             export.Tags = FillTags();
             export.Posts = FillPosts();
+            export.Users = FillUsers();
 
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(export, Newtonsoft.Json.Formatting.Indented);
             File.Delete(outFile);
@@ -29,6 +31,29 @@ namespace WPExportContent.Core.Export
             json = Newtonsoft.Json.JsonConvert.SerializeObject(export, Newtonsoft.Json.Formatting.None);
             File.Delete(outFile);
             File.WriteAllText(outFile, json);
+        }
+
+        private IEnumerable<UserDTO> FillUsers()
+        {
+            List<UserDTO> result = new List<UserDTO>();
+
+            foreach (var item in this.Users)
+            {
+                bool skipItem = result
+                    .Where(x => x.ID == item.ID)
+                    .Any();
+
+                if (skipItem)
+                {
+                    continue;
+                }
+
+                UserDTO user = this.MapperUser.Map<WPUserDTO, UserDTO>(item);
+
+                result.Add(user);
+            }
+
+            return result;
         }
 
         private List<PostDTO> FillPosts()

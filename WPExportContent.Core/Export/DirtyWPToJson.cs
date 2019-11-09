@@ -13,7 +13,8 @@ namespace WPExportContent.Core.Export
             {
                 Categories = this.Categories,
                 Posts = this.Posts,
-                Tags = this.Tags
+                Tags = this.Tags,
+                Users = this.Users
             };
 
             string dirtyExportJson = Newtonsoft.Json.JsonConvert.SerializeObject(dirtyExport, Newtonsoft.Json.Formatting.Indented);

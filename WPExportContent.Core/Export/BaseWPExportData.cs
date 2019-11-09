@@ -10,10 +10,12 @@ namespace WPExportContent.Core.Export
         public IEnumerable<WPPostDTO> Posts;
         public IEnumerable<WPTagDTO> Tags;
         public IEnumerable<WPCategoryDTO> Categories;
+        public IEnumerable<WPUserDTO> Users;
 
         protected IMapper MapperPost = null;
         protected IMapper MapperCategory = null;
         protected IMapper MapperTag = null;
+        protected IMapper MapperUser = null;
 
 
         public BaseWPExportData()
@@ -26,6 +28,9 @@ namespace WPExportContent.Core.Export
 
             MappingTag mappingTag = new MappingTag();
             this.MapperTag = mappingTag.Get;
+
+            MappingUser mappingUser = new MappingUser();
+            this.MapperUser = mappingUser.Get;
         }
     }
 }
