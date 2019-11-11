@@ -37,13 +37,15 @@ namespace WPExportContent
             var category = mySQLEngine.Select<WPCategoryDTO>(_wpQuery.GetWPCategories);
             var users = mySQLEngine.Select<WPUserDTO>(_wpQuery.GetWPUsers);
 
-            //DirtyWPToJson dirtyWPToJson = new DirtyWPToJson()
-            //{
-            //    Categories = category,
-            //    Tags = tags,
-            //    Posts = posts
-            //};
-            //dirtyWPToJson.Run(_configurationOUTFile.DirtyExportFile);
+            DirtyWPToJson dirtyWPToJson = new DirtyWPToJson()
+            {
+                Categories = category,
+                Tags = tags,
+                Posts = posts,
+                Products = products,
+                Users = users
+            };
+            dirtyWPToJson.Run(_configurationOUTFile.DirtyExportFile);
 
             WPToJson wPToJson = new WPToJson()
             {
