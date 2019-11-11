@@ -8,11 +8,14 @@ namespace WPExportContent.Core.Export
     public class BaseWPExportData
     {
         public IEnumerable<WPPostDTO> Posts;
+        public IEnumerable<WPProductDTO> Products;
         public IEnumerable<WPTagDTO> Tags;
         public IEnumerable<WPCategoryDTO> Categories;
         public IEnumerable<WPUserDTO> Users;
 
         protected IMapper MapperPost = null;
+
+        protected IMapper MapperProduct = null;
         protected IMapper MapperCategory = null;
         protected IMapper MapperTag = null;
         protected IMapper MapperUser = null;
@@ -22,6 +25,9 @@ namespace WPExportContent.Core.Export
         {
             MappingPost mappingPost = new MappingPost();
             this.MapperPost = mappingPost.Get;
+
+            MappingProducts mappingProducts = new MappingProducts();
+            this.MapperProduct = mappingProducts.Get;
 
             MappingCategory mappingCategory = new MappingCategory();
             this.MapperCategory = mappingCategory.Get;

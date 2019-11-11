@@ -32,6 +32,7 @@ namespace WPExportContent
             );
 
             var posts = mySQLEngine.Select<WPPostDTO>(_wpQuery.GetWPPosts);
+            var products = mySQLEngine.Select<WPProductDTO>(_wpQuery.GetWPProducts);
             var tags = mySQLEngine.Select<WPTagDTO>(_wpQuery.GetWPTags);
             var category = mySQLEngine.Select<WPCategoryDTO>(_wpQuery.GetWPCategories);
             var users = mySQLEngine.Select<WPUserDTO>(_wpQuery.GetWPUsers);
@@ -49,12 +50,13 @@ namespace WPExportContent
                 Categories = category,
                 Tags = tags,
                 Posts = posts,
+                Products = products,
                 Users = users
             };
             wPToJson.Run(_configurationOUTFile.ExportFile);
 
         }
 
-       
+
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using WPExportContent.Core.DTO;
@@ -10,10 +9,10 @@ namespace WPExportContent.Core.Export
 {
     public class WPToJson : BaseWPExportData
     {
-        public WPToJson():base()
+        public WPToJson() : base()
         {
-        
-        }   
+
+        }
 
         public void Run(string outFile)
         {
@@ -22,6 +21,8 @@ namespace WPExportContent.Core.Export
             export.Tags = FillTags();
             export.Posts = FillPosts();
             export.Users = FillUsers();
+            export.Products = FillProducts();
+
 
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(export, Newtonsoft.Json.Formatting.Indented);
             File.Delete(outFile);
@@ -53,10 +54,12 @@ namespace WPExportContent.Core.Export
                 result.Add(user);
             }
 
-            return result;
+            return result
+                .OrderBy(x => x.UserName)
+                .Select(x => x);
         }
 
-        private List<PostDTO> FillPosts()
+        private IEnumerable<PostDTO> FillPosts()
         {
             List<PostDTO> result = new List<PostDTO>();
 
@@ -91,10 +94,51 @@ namespace WPExportContent.Core.Export
                 result.Add(p);
             }
 
-            return result;
+            return result
+                .OrderBy(x => x.PostTitle)
+                .Select(x => x);
         }
 
-        private List<TagDTO> FillTags()
+        private IEnumerable<ProductDTO> FillProducts()
+        {
+            List<ProductDTO> result = new List<ProductDTO>();
+
+            foreach (var item in this.Products)
+            {
+                bool skipItem = result
+                    .Where(x => x.ID == item.ID)
+                    .Any();
+
+                if (skipItem)
+                {
+                    continue;
+                }
+
+                ProductDTO p = this.MapperProduct.Map<WPProductDTO, ProductDTO>(item);
+
+                p.Tags = this.Tags
+                    .Where(x => x.object_id == p.ID)
+                    .Select(x => x.term_id)
+                    .Distinct()
+                    .OrderBy(x => x)
+                    .ToList();
+
+                p.Categories = this.Categories
+                            .Where(x => x.object_id == p.ID)
+                            .Select(x => x.term_id)
+                            .Distinct()
+                            .OrderBy(x => x)
+                            .ToList();
+
+                result.Add(p);
+            }
+
+            return result
+                .OrderBy(x => x.PostTitle)
+                .Select(x => x);
+        }
+
+        private IEnumerable<TagDTO> FillTags()
         {
             List<TagDTO> result = new List<TagDTO>();
 
@@ -114,12 +158,13 @@ namespace WPExportContent.Core.Export
                 result.Add(tag);
             }
 
-            return result;
+            return result
+                .OrderBy(x => x.Name)
+                .Select(x => x);
         }
 
-        private List<CategoryDTO> FillCategories()
+        private IEnumerable<CategoryDTO> FillCategories()
         {
-
             List<CategoryDTO> result = new List<CategoryDTO>();
 
             foreach (var item in this.Categories)
@@ -139,7 +184,9 @@ namespace WPExportContent.Core.Export
 
             }
 
-            return result;
+            return result
+                .OrderBy(x => x.Name)
+                .Select(x => x);
         }
     }
 }

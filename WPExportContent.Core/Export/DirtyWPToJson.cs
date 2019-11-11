@@ -3,15 +3,15 @@ using WPExportContent.Core.WordPress;
 
 namespace WPExportContent.Core.Export
 {
-    public class DirtyWPToJson: BaseWPExportData
+    public class DirtyWPToJson : BaseWPExportData
     {
-
 
         public void Run(string outFile)
         {
             WPDirtyExportResult dirtyExport = new WPDirtyExportResult()
             {
                 Categories = this.Categories,
+                Products = this.Products,
                 Posts = this.Posts,
                 Tags = this.Tags,
                 Users = this.Users
