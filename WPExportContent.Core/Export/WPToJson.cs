@@ -16,12 +16,14 @@ namespace WPExportContent.Core.Export
 
         public void Run(string outFile)
         {
-            WPExportResult export = new WPExportResult();
-            export.Categories = FillCategories();
-            export.Tags = FillTags();
-            export.Posts = FillPosts();
-            export.Users = FillUsers();
-            export.Products = FillProducts();
+            WPExportResult export = new WPExportResult()
+            {
+                Categories = FillCategories(),
+                Tags = FillTags(),
+                Posts = FillPosts(),
+                Users = FillUsers(),
+                Products = FillProducts(),
+            };
 
 
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(export, Newtonsoft.Json.Formatting.Indented);
