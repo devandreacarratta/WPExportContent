@@ -9,7 +9,7 @@ namespace WPExportContent.Core.Export
 {
     public class WPToJson : BaseWPExportData
     {
-        public WPToJson() : base()
+        public WPToJson(WPExportDTO export) : base(export)
         {
 
         }
@@ -38,7 +38,7 @@ namespace WPExportContent.Core.Export
         {
             List<UserDTO> result = new List<UserDTO>();
 
-            foreach (var item in this.Users)
+            foreach (var item in this._export.WPUsers)
             {
                 bool skipItem = result
                     .Where(x => x.ID == item.ID)
@@ -63,7 +63,7 @@ namespace WPExportContent.Core.Export
         {
             List<PostDTO> result = new List<PostDTO>();
 
-            foreach (var item in this.Posts)
+            foreach (var item in this._export.WPPosts)
             {
                 bool skipItem = result
                     .Where(x => x.ID == item.ID)
@@ -76,14 +76,14 @@ namespace WPExportContent.Core.Export
 
                 PostDTO p = this.MapperPost.Map<WPPostDTO, PostDTO>(item);
 
-                p.Tags = this.Tags
+                p.Tags = this._export.WPTags
                     .Where(x => x.object_id == p.ID)
                     .Select(x => x.term_id)
                     .Distinct()
                     .OrderBy(x => x)
                     .ToList();
 
-                p.Categories = this.Categories
+                p.Categories = this._export.WPCategories
                             .Where(x => x.object_id == p.ID)
                             .Select(x => x.term_id)
                             .Distinct()
@@ -103,34 +103,39 @@ namespace WPExportContent.Core.Export
         {
             List<ProductDTO> result = new List<ProductDTO>();
 
-            foreach (var item in this.Products)
+            if (this._export.WPProducts != null)
             {
-                bool skipItem = result
-                    .Where(x => x.ID == item.ID)
-                    .Any();
 
-                if (skipItem)
+                foreach (var item in this._export.WPProducts)
                 {
-                    continue;
+                    bool skipItem = result
+                        .Where(x => x.ID == item.ID)
+                        .Any();
+
+                    if (skipItem)
+                    {
+                        continue;
+                    }
+
+                    ProductDTO p = this.MapperProduct.Map<WPProductDTO, ProductDTO>(item);
+
+                    p.Tags = this._export.WPTags
+                        .Where(x => x.object_id == p.ID)
+                        .Select(x => x.term_id)
+                        .Distinct()
+                        .OrderBy(x => x)
+                        .ToList();
+
+                    p.Categories = this._export.WPCategories
+                                .Where(x => x.object_id == p.ID)
+                                .Select(x => x.term_id)
+                                .Distinct()
+                                .OrderBy(x => x)
+                                .ToList();
+
+                    result.Add(p);
                 }
 
-                ProductDTO p = this.MapperProduct.Map<WPProductDTO, ProductDTO>(item);
-
-                p.Tags = this.Tags
-                    .Where(x => x.object_id == p.ID)
-                    .Select(x => x.term_id)
-                    .Distinct()
-                    .OrderBy(x => x)
-                    .ToList();
-
-                p.Categories = this.Categories
-                            .Where(x => x.object_id == p.ID)
-                            .Select(x => x.term_id)
-                            .Distinct()
-                            .OrderBy(x => x)
-                            .ToList();
-
-                result.Add(p);
             }
 
             return result
@@ -142,7 +147,7 @@ namespace WPExportContent.Core.Export
         {
             List<TagDTO> result = new List<TagDTO>();
 
-            foreach (var item in this.Tags)
+            foreach (var item in this._export.WPTags)
             {
                 bool skipItem = result
                     .Where(x => x.ID == item.term_id)
@@ -167,7 +172,7 @@ namespace WPExportContent.Core.Export
         {
             List<CategoryDTO> result = new List<CategoryDTO>();
 
-            foreach (var item in this.Categories)
+            foreach (var item in this._export.WPCategories)
             {
                 bool skipItem = result
                     .Where(x => x.ID == item.term_id)

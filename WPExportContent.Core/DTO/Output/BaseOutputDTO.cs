@@ -4,7 +4,7 @@ namespace WPExportContent.Core.DTO.Output
 {
     public class BaseOutputDTO
     {
-        public Guid RowID { get; set; } = Guid.NewGuid();
+        public Guid RowID { get; set; } = SequentialGuidGenerator.NewSequentialGuid();
         public DateTime RowCreationDateUTC { get; set; } = DateTime.UtcNow;
     }
 }

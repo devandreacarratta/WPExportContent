@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System.Collections.Generic;
 using WPExportContent.Core.DTO;
 using WPExportContent.Core.Mappings;
 
@@ -7,11 +6,8 @@ namespace WPExportContent.Core.Export
 {
     public class BaseWPExportData
     {
-        public IEnumerable<WPPostDTO> Posts;
-        public IEnumerable<WPProductDTO> Products;
-        public IEnumerable<WPTagDTO> Tags;
-        public IEnumerable<WPCategoryDTO> Categories;
-        public IEnumerable<WPUserDTO> Users;
+
+        protected WPExportDTO _export = null;
 
         protected IMapper MapperPost = null;
 
@@ -21,8 +17,10 @@ namespace WPExportContent.Core.Export
         protected IMapper MapperUser = null;
 
 
-        public BaseWPExportData()
+        public BaseWPExportData(WPExportDTO export)
         {
+            this._export = export;
+
             MappingPost mappingPost = new MappingPost();
             this.MapperPost = mappingPost.Get;
 

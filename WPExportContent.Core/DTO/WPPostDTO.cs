@@ -1,7 +1,6 @@
 ﻿namespace WPExportContent.Core.DTO
 {
-    public class WPPostDTO: WPTablePostsDTO
+    public class WPPostDTO : WPTablePostsDTO
     {
-      
     }
 }
