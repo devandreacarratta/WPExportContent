@@ -18,6 +18,16 @@
             }
         }
 
+        public string GetWPProducts
+        {
+            get
+            {
+                string result = $@"SELECT * FROM {_tablePrefix}posts WHERE post_status ='publish' AND post_type= 'product'";
+
+                return result;
+            }
+        }
+
         public string GetWPUsers
         {
             get
@@ -41,7 +51,7 @@
                             ON T.term_id = R.term_taxonomy_id 
                         INNER JOIN  {_tablePrefix}term_taxonomy TT 
                             ON TT.term_id = T.term_id 
-                    WHERE TT.taxonomy = 'post_tag' ";
+                    WHERE TT.taxonomy IN( 'post_tag' , 'product_tag') ";
 
                 return result;
             }
@@ -61,7 +71,7 @@
                             ON T.term_id = R.term_taxonomy_id 
                         INNER JOIN  {_tablePrefix}term_taxonomy TT 
                             ON TT.term_id = T.term_id 
-                    WHERE TT.taxonomy = 'category' ";
+                    WHERE TT.taxonomy IN( 'category' , 'product_cat') ";
 
                 return result;
             }

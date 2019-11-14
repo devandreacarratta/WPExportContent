@@ -7,6 +7,7 @@ namespace WPExportContent.Core.WordPress
     {
         public IEnumerable<WPCategoryDTO> Categories { get; set; }
         public IEnumerable<WPPostDTO> Posts { get; set; }
+        public IEnumerable<WPProductDTO> Products { get; set; }
         public IEnumerable<WPTagDTO> Tags { get; set; }
 
         public IEnumerable<WPUserDTO> Users { get; set; }

@@ -36,5 +36,11 @@ namespace WPExportContent
             return result;
         }
 
+        public static WPConfigurationPluginExportDTO GetPluginExportDTO()
+        {
+            WPConfigurationPluginExportDTO result = ConfigurationRoot.GetSection("PluginExport").Get<WPConfigurationPluginExportDTO>();
+            return result;
+        }
+
     }
 }

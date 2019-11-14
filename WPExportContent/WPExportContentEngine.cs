@@ -5,25 +5,24 @@ using WPExportContent.Core.WordPress;
 
 namespace WPExportContent
 {
+
     public class WPExportContentEngine
     {
-
-
         private WPQuery _wpQuery = null;
         private WPConfigurationSourceDTO _wpSource = null;
         private WPConfigurationOUTFileDTO _configurationOUTFile = null;
+        private WPConfigurationPluginExportDTO _wpConfigurationPluginExportDTO = null;
 
         public WPExportContentEngine()
         {
             _wpSource = Configuration.GetWPSourceDTO();
             _wpQuery = new WPQuery(_wpSource.TABLE_PREFIX);
             _configurationOUTFile = Configuration.GetOUTFileDTO();
+            _wpConfigurationPluginExportDTO = Configuration.GetPluginExportDTO();
         }
 
         public void DoWork()
         {
-
-
             MySQLEngine mySQLEngine = new MySQLEngine(
                 _wpSource.DB_HOST,
                 _wpSource.DB_NAME,
@@ -31,30 +30,30 @@ namespace WPExportContent
                 _wpSource.DB_PASSWORD
             );
 
-            var posts = mySQLEngine.Select<WPPostDTO>(_wpQuery.GetWPPosts);
-            var tags = mySQLEngine.Select<WPTagDTO>(_wpQuery.GetWPTags);
-            var category = mySQLEngine.Select<WPCategoryDTO>(_wpQuery.GetWPCategories);
-            var users = mySQLEngine.Select<WPUserDTO>(_wpQuery.GetWPUsers);
+            WPExportDTO exportDTO = new WPExportDTO();
 
-            //DirtyWPToJson dirtyWPToJson = new DirtyWPToJson()
-            //{
-            //    Categories = category,
-            //    Tags = tags,
-            //    Posts = posts
-            //};
-            //dirtyWPToJson.Run(_configurationOUTFile.DirtyExportFile);
+            exportDTO.WPPosts = mySQLEngine.Select<WPPostDTO>(_wpQuery.GetWPPosts);
+            exportDTO.WPTags = mySQLEngine.Select<WPTagDTO>(_wpQuery.GetWPTags);
+            exportDTO.WPCategories = mySQLEngine.Select<WPCategoryDTO>(_wpQuery.GetWPCategories);
+            exportDTO.WPUsers = mySQLEngine.Select<WPUserDTO>(_wpQuery.GetWPUsers);
 
-            WPToJson wPToJson = new WPToJson()
+            if (_wpConfigurationPluginExportDTO.WooCommerce)
             {
-                Categories = category,
-                Tags = tags,
-                Posts = posts,
-                Users = users
-            };
-            wPToJson.Run(_configurationOUTFile.ExportFile);
+                exportDTO.WPProducts = mySQLEngine.Select<WPProductDTO>(_wpQuery.GetWPProducts);
+            }
 
+            if (string.IsNullOrEmpty(_configurationOUTFile.DirtyExportFile) == false)
+            {
+                DirtyWPToJson dirtyWPToJson = new DirtyWPToJson(exportDTO);
+                dirtyWPToJson.Run(_configurationOUTFile.DirtyExportFile);
+            }
+
+            if (string.IsNullOrEmpty(_configurationOUTFile.ExportFile) == false)
+            {
+                WPToJson wPToJson = new WPToJson(exportDTO);
+                wPToJson.Run(_configurationOUTFile.ExportFile);
+            }
         }
 
-       
     }
 }

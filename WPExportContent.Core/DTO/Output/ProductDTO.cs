@@ -1,6 +1,6 @@
 ﻿namespace WPExportContent.Core.DTO.Output
 {
-    public class PostDTO : BaseTablePostDTO
+    public class ProductDTO : BaseTablePostDTO
     {
     }
 }

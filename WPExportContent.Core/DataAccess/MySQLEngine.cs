@@ -55,17 +55,5 @@ namespace WPExportContent.Core.DataAccess
 
         }
 
-        //public IEnumerable<WPTagDTO> GetWPTags(string sql)
-        //{
-
-        //    using (var conn = this.DBConnection())
-        //    {
-        //        var result = conn.Query<WPTagDTO>(sql);
-        //        conn.Close();
-        //        return result;
-        //    }
-
-        //}
-
     }
 }

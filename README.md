@@ -6,6 +6,9 @@ Export Content From WP
 ```
 
 {
+	"PluginExport": {
+		"WooCommerce": true
+	},
 	"WPSource": {
 		"DB_NAME": "wpexportcontent",
 		"DB_USER": "root",
@@ -23,3 +26,7 @@ Export Content From WP
 ```
 
 The appsettings.json values are fake (just to write something ...)
+
+### PluginExport
+
+WooCommerce : set "true" if you want to export products (no orders)

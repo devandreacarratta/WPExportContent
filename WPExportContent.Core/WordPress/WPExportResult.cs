@@ -10,5 +10,6 @@ namespace WPExportContent.Core.WordPress
         public IEnumerable<TagDTO> Tags { get; set; }
 
         public IEnumerable<UserDTO> Users { get; set; }
+        public IEnumerable<ProductDTO> Products { get; set; }
     }
 }
