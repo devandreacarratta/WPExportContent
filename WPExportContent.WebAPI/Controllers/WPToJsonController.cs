@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using System.IO;
 using System.Text;
 using WPExportContent.WebAPI.DTO;
 
@@ -29,29 +26,16 @@ namespace WPExportContent.WebAPI.Controllers
 
         // POST: api/WPToJson
         [HttpPost]
-        public HttpResponseMessage Post([FromBody] WPToJsonDTO value)
+        public IActionResult Post([FromBody] WPToJsonDTO value)
         {
             WPExportContentEngine engine = new WPExportContentEngine(value);
             var json = engine.DoWork();
 
             byte[] jsonBytes = Encoding.ASCII.GetBytes(json);
 
-            string exportFileName = $"WPToJson_{DateTime.UtcNow.ToString("yyyyMMddHHmm")}.json";
+            Stream stream = new MemoryStream(jsonBytes);
+            return File(stream, "application/octet-stream");
 
-            var result = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new ByteArrayContent(jsonBytes)
-            };
-
-            result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment")
-                {
-                    FileName = exportFileName
-                };
-
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-            return result;
         }
 
         // PUT: api/WPToJson/5
