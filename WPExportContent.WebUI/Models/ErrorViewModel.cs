@@ -1,5 +1,3 @@
-using System;
-
 namespace WPExportContent.WebUI.Models
 {
     public class ErrorViewModel

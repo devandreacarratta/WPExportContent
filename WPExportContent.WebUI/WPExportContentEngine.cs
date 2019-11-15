@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WPExportContent.Core.DataAccess;
+﻿using WPExportContent.Core.DataAccess;
 using WPExportContent.Core.DTO;
 using WPExportContent.Core.Export;
 using WPExportContent.Core.WordPress;
