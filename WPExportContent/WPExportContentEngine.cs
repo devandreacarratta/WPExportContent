@@ -45,13 +45,17 @@ namespace WPExportContent
             if (string.IsNullOrEmpty(_configurationOUTFile.DirtyExportFile) == false)
             {
                 DirtyWPToJson dirtyWPToJson = new DirtyWPToJson(exportDTO);
-                dirtyWPToJson.Run(_configurationOUTFile.DirtyExportFile);
+                string json = dirtyWPToJson.CreateJSON(Newtonsoft.Json.Formatting.None);
+
+                FileHelper.WriteToFile(_configurationOUTFile.DirtyExportFile, json);
             }
 
             if (string.IsNullOrEmpty(_configurationOUTFile.ExportFile) == false)
             {
                 WPToJson wPToJson = new WPToJson(exportDTO);
-                wPToJson.Run(_configurationOUTFile.ExportFile);
+                string json = wPToJson.CreateJSON(Newtonsoft.Json.Formatting.None);
+
+                FileHelper.WriteToFile(_configurationOUTFile.ExportFile, json);
             }
         }
 

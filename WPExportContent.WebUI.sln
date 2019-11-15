@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPExportContent.Core", "WPExportContent.Core\WPExportContent.Core.csproj", "{A524A468-83E7-478D-ADD1-59EC6D98FA51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPExportContent.WebUI", "WPExportContent.WebUI\WPExportContent.WebUI.csproj", "{15DC6EA1-D9FE-4C05-96FB-622B610055DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A524A468-83E7-478D-ADD1-59EC6D98FA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A524A468-83E7-478D-ADD1-59EC6D98FA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A524A468-83E7-478D-ADD1-59EC6D98FA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A524A468-83E7-478D-ADD1-59EC6D98FA51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15DC6EA1-D9FE-4C05-96FB-622B610055DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15DC6EA1-D9FE-4C05-96FB-622B610055DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15DC6EA1-D9FE-4C05-96FB-622B610055DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15DC6EA1-D9FE-4C05-96FB-622B610055DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7DF0B50-E945-455E-8BBB-E24395B26CB9}
+	EndGlobalSection
+EndGlobal

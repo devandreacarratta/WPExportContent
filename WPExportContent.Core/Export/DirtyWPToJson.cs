@@ -1,5 +1,4 @@
-﻿using System.IO;
-using WPExportContent.Core.DTO;
+﻿using WPExportContent.Core.DTO;
 using WPExportContent.Core.WordPress;
 
 namespace WPExportContent.Core.Export
@@ -10,7 +9,7 @@ namespace WPExportContent.Core.Export
         {
         }
 
-        public void Run(string outFile)
+        public string CreateJSON(Newtonsoft.Json.Formatting formatting )
         {
             WPDirtyExportResult dirtyExport = new WPDirtyExportResult()
             {
@@ -21,14 +20,10 @@ namespace WPExportContent.Core.Export
                 Users = this._export.WPUsers
             };
 
-            string dirtyExportJson = Newtonsoft.Json.JsonConvert.SerializeObject(dirtyExport, Newtonsoft.Json.Formatting.Indented);
-            File.Delete(outFile);
-            File.WriteAllText(outFile, dirtyExportJson);
+            string result = Newtonsoft.Json.JsonConvert.SerializeObject(dirtyExport, formatting);
 
-            outFile = outFile.Replace(".json", ".min.json");
-            string dirtyExportMinJson = Newtonsoft.Json.JsonConvert.SerializeObject(dirtyExport, Newtonsoft.Json.Formatting.None);
-            File.Delete(outFile);
-            File.WriteAllText(outFile, dirtyExportMinJson);
+            return result;
+
         }
 
     }

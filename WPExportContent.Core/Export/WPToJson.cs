@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using WPExportContent.Core.DTO;
 using WPExportContent.Core.DTO.Output;
@@ -14,7 +13,7 @@ namespace WPExportContent.Core.Export
 
         }
 
-        public void Run(string outFile)
+        public string CreateJSON(Newtonsoft.Json.Formatting formatting)
         {
             WPExportResult export = new WPExportResult()
             {
@@ -25,15 +24,8 @@ namespace WPExportContent.Core.Export
                 Products = FillProducts(),
             };
 
-
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(export, Newtonsoft.Json.Formatting.Indented);
-            File.Delete(outFile);
-            File.WriteAllText(outFile, json);
-
-            outFile = outFile.Replace(".json", ".min.json");
-            json = Newtonsoft.Json.JsonConvert.SerializeObject(export, Newtonsoft.Json.Formatting.None);
-            File.Delete(outFile);
-            File.WriteAllText(outFile, json);
+            string result = Newtonsoft.Json.JsonConvert.SerializeObject(export, formatting);
+            return result;
         }
 
         private IEnumerable<UserDTO> FillUsers()
