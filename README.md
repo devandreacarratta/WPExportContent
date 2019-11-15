@@ -1,7 +1,15 @@
 # WPExportContent
 Export Content From WP 
 
-## appsettings.json
+## Solutions
+
+### WPExportContent.WebUI.sln
+NetCore3 & MVC Web Solution - Export WP Blog from UI (minimal) Interface 
+
+### WPExportContent.sln
+NetCore console app - fast test with appsettings.json for setting
+
+####  WPExportContent - appsettings.json
 
 ```
 
@@ -25,8 +33,4 @@ Export Content From WP
 
 ```
 
-The appsettings.json values are fake (just to write something ...)
-
-### PluginExport
-
-WooCommerce : set "true" if you want to export products (no orders)
+PluginExport / WooCommerce : set "true" if you want to export products (no orders)
