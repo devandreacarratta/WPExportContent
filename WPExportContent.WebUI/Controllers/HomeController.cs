@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using WPExportContent.Core.Plugin;
 using WPExportContent.WebUI.DTO;
 using WPExportContent.WebUI.Models;
 
@@ -20,7 +22,14 @@ namespace WPExportContent.WebUI.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            WPToJsonDTOModel model = new WPToJsonDTOModel();
+            model.ListOfPluginGroup = new List<ListOfPlugin>();
+            foreach (ListOfPlugin p in Enum.GetValues(typeof(ListOfPlugin)))
+            {
+                model.ListOfPluginGroup.Add(p);
+            }
+
+            return View(model);
         }
 
         public IActionResult Privacy()

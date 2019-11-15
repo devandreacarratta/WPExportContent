@@ -1,8 +1,10 @@
-﻿namespace WPExportContent.WebUI.DTO
+﻿using WPExportContent.Core.Plugin;
+
+namespace WPExportContent.WebUI.DTO
 {
     public interface IWPToJsonDTO
     {
-        string PluginExport { get; set; }
+        ListOfPlugin[] PluginExport { get; set; }
         string WPSourceDBHost { get; set; }
         string WPSourceDBName { get; set; }
         string WPSourceDBPassword { get; set; }
@@ -15,7 +17,7 @@
     public class WPToJsonDTO : IWPToJsonDTO
     {
 
-        public string PluginExport { get; set; }
+        public ListOfPlugin[] PluginExport { get; set; }
         public string WPSourceDBName { get; set; }
         public string WPSourceDBUser { get; set; }
         public string WPSourceDBPassword { get; set; } 

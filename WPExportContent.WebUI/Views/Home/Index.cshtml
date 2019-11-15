@@ -1,4 +1,4 @@
-﻿@model WPExportContent.WebUI.DTO.WPToJsonDTO
+﻿@model WPExportContent.WebUI.Models.WPToJsonDTOModel
 
 @{
     ViewData["Title"] = "Index";
@@ -10,50 +10,55 @@
 <hr />
 <div class="row">
 	<div class="col-md-4">
-	@using (Html.BeginForm("ExportToJson", "Home"))
-	{
-		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-		<div class="form-group">
-			<label asp-for="PluginExport" class="control-label"></label>
-			<input asp-for="PluginExport" class="form-control" />
-			<span asp-validation-for="PluginExport" class="text-danger"></span>
+		@using (Html.BeginForm("ExportToJson", "Home"))
+		{
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="WPSourceDBName" class="control-label"></label>
+				<input asp-for="WPSourceDBName" class="form-control" />
+				<span asp-validation-for="WPSourceDBName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="WPSourceDBUser" class="control-label"></label>
+				<input asp-for="WPSourceDBUser" class="form-control" />
+				<span asp-validation-for="WPSourceDBUser" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="WPSourceDBPassword" class="control-label"></label>
+				<input asp-for="WPSourceDBPassword" class="form-control" />
+				<span asp-validation-for="WPSourceDBPassword" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="WPSourceDBHost" class="control-label"></label>
+				<input asp-for="WPSourceDBHost" class="form-control" />
+				<span asp-validation-for="WPSourceDBHost" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="WPSourceDBTablePrefix" class="control-label"></label>
+				<input asp-for="WPSourceDBTablePrefix" class="form-control" />
+				<span asp-validation-for="WPSourceDBTablePrefix" class="text-danger"></span>
+			</div>
+			<div class="form-group form-check">
+				<label class="form-check-label">
+					<input class="form-check-input" asp-for="JSONIndented" /> @Html.DisplayNameFor(model => model.JSONIndented)
+				</label>
+			</div>
+
+			<div class="form-group form-check">
+			@foreach (var p in Model.ListOfPluginGroup)
+			{
+				<label>
+			<input type="checkbox" name="PluginExport" value="@p" /> @p
+				</label>
+			}
+			</div>
+
+				<div class="form-group">
+					<input type="submit" value="Create" class="btn btn-primary" />
+				</div>
+				}
+			</div>
 		</div>
-		<div class="form-group">
-			<label asp-for="WPSourceDBName" class="control-label"></label>
-			<input asp-for="WPSourceDBName" class="form-control" />
-			<span asp-validation-for="WPSourceDBName" class="text-danger"></span>
-		</div>
-		<div class="form-group">
-			<label asp-for="WPSourceDBUser" class="control-label"></label>
-			<input asp-for="WPSourceDBUser" class="form-control" />
-			<span asp-validation-for="WPSourceDBUser" class="text-danger"></span>
-		</div>
-		<div class="form-group">
-			<label asp-for="WPSourceDBPassword" class="control-label"></label>
-			<input asp-for="WPSourceDBPassword" class="form-control" />
-			<span asp-validation-for="WPSourceDBPassword" class="text-danger"></span>
-		</div>
-		<div class="form-group">
-			<label asp-for="WPSourceDBHost" class="control-label"></label>
-			<input asp-for="WPSourceDBHost" class="form-control" />
-			<span asp-validation-for="WPSourceDBHost" class="text-danger"></span>
-		</div>
-		<div class="form-group">
-			<label asp-for="WPSourceDBTablePrefix" class="control-label"></label>
-			<input asp-for="WPSourceDBTablePrefix" class="form-control" />
-			<span asp-validation-for="WPSourceDBTablePrefix" class="text-danger"></span>
-		</div>
-		<div class="form-group form-check">
-			<label class="form-check-label">
-				<input class="form-check-input" asp-for="JSONIndented" /> @Html.DisplayNameFor(model => model.JSONIndented)
-			</label>
-		</div>
-		<div class="form-group">
-			<input type="submit" value="Create" class="btn btn-primary" />
-		</div>
-	}
-	</div>
-</div>
 
 <div>
     <a asp-action="Index">Back to List</a>

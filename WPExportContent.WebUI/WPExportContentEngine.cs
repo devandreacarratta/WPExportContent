@@ -1,6 +1,8 @@
-﻿using WPExportContent.Core.DataAccess;
+﻿using System;
+using WPExportContent.Core.DataAccess;
 using WPExportContent.Core.DTO;
 using WPExportContent.Core.Export;
+using WPExportContent.Core.Plugin;
 using WPExportContent.Core.WordPress;
 using WPExportContent.WebUI.DTO;
 
@@ -35,7 +37,7 @@ namespace WPExportContent.WebUI
             exportDTO.WPCategories = mySQLEngine.Select<WPCategoryDTO>(_wpQuery.GetWPCategories);
             exportDTO.WPUsers = mySQLEngine.Select<WPUserDTO>(_wpQuery.GetWPUsers);
 
-            if (_wpToJsonDTO.PluginExport.Contains("WooCommerce"))
+            if (Array.IndexOf(_wpToJsonDTO.PluginExport, ListOfPlugin.WooCommerce) != -1)
             {
                 exportDTO.WPProducts = mySQLEngine.Select<WPProductDTO>(_wpQuery.GetWPProducts);
             }
