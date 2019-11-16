@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29318.209
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPExportContent", "WPExportContent\WPExportContent.csproj", "{22288C97-DB30-45B3-A983-A9E20695605F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPExportContent.Core", "WPExportContent.Core\WPExportContent.Core.csproj", "{722B232E-E67C-4207-81CC-50EBD08F75D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPExportContent.Core", "WPExportContent.Core\WPExportContent.Core.csproj", "{722B232E-E67C-4207-81CC-50EBD08F75D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

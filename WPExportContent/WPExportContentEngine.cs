@@ -53,8 +53,7 @@ namespace WPExportContent
             if (string.IsNullOrEmpty(_configurationOUTFile.ExportFile) == false)
             {
                 WPToJson wPToJson = new WPToJson(exportDTO);
-                string json = wPToJson.CreateJSON(Newtonsoft.Json.Formatting.None);
-
+                string json = wPToJson.CreateJSON(Newtonsoft.Json.Formatting.Indented);
                 FileHelper.WriteToFile(_configurationOUTFile.ExportFile, json);
             }
         }

@@ -19,11 +19,15 @@ namespace WPExportContent.Core.Export
             {
                 Categories = FillCategories(),
                 Tags = FillTags(),
-                Posts = FillPosts(),
-                Users = FillUsers(),
-                Products = FillProducts(),
             };
 
+            export.Posts = FillPosts();
+            export.Users = FillUsers();
+            export.Products = FillProducts();
+
+            export.ContentCategories = FillContentCategories();
+            export.ContentTags = FillContentTags();
+      
             string result = Newtonsoft.Json.JsonConvert.SerializeObject(export, formatting);
             return result;
         }
@@ -70,21 +74,6 @@ namespace WPExportContent.Core.Export
 
                 PostDTO p = this.MapperPost.Map<WPPostDTO, PostDTO>(item);
 
-                p.Tags = this._export.WPTags
-                    .Where(x => x.object_id == p.ID)
-                    .Select(x => x.term_id)
-                    .Distinct()
-                    .OrderBy(x => x)
-                    .ToList();
-
-                p.Categories = this._export.WPCategories
-                            .Where(x => x.object_id == p.ID)
-                            .Select(x => x.term_id)
-                            .Distinct()
-                            .OrderBy(x => x)
-                            .ToList();
-
-
                 result.Add(p);
             }
 
@@ -92,6 +81,77 @@ namespace WPExportContent.Core.Export
                 .OrderBy(x => x.PostTitle)
                 .Select(x => x);
         }
+
+        private IEnumerable<ContentCategoriesDTO> FillContentCategories()
+        {
+            List<ContentCategoriesDTO> result = new List<ContentCategoriesDTO>();
+
+            List<long> ids = this._export.WPPosts.Select(x => x.ID).ToList();
+            ids.AddRange(this._export.WPProducts.Select(x => x.ID));
+
+            foreach (var id in ids)
+            {
+                var categories = this._export.WPCategories
+                                                     .Where(x => x.object_id == id)
+                                                     .Select(x => x.term_id)
+                                                     .Distinct()
+                                                     .OrderBy(x => x)
+                                                     .ToArray();
+
+                foreach (var item in categories)
+                {
+                    result.Add(
+                        new ContentCategoriesDTO()
+                        {
+                            IDContent = id,
+                            IDCategory = item,
+                        }
+                    );
+                }
+            }
+
+          
+
+            return result
+                .OrderBy(x => x.IDContent)
+                .ThenBy(x => x.IDCategory)
+                .Select(x => x);
+        }
+
+        private IEnumerable<ContentTagsDTO> FillContentTags()
+        {
+            List<ContentTagsDTO> result = new List<ContentTagsDTO>();
+
+            List<long> ids = this._export.WPPosts.Select(x => x.ID).ToList();
+            ids.AddRange(this._export.WPProducts.Select(x => x.ID));
+
+            foreach (var id in ids)
+            {
+                var categories = this._export.WPTags
+                                                     .Where(x => x.object_id == id)
+                                                     .Select(x => x.term_id)
+                                                     .Distinct()
+                                                     .OrderBy(x => x)
+                                                     .ToArray();
+
+                foreach (var item in categories)
+                {
+                    result.Add(
+                        new ContentTagsDTO()
+                        {
+                            IDContent = id,
+                            IDTag = item,
+                        }
+                    ); 
+                }
+            }
+
+            return result
+                .OrderBy(x => x.IDContent)
+                .ThenBy(x => x.IDTag)
+                .Select(x => x);
+        }
+
 
         private IEnumerable<ProductDTO> FillProducts()
         {
@@ -112,20 +172,6 @@ namespace WPExportContent.Core.Export
                     }
 
                     ProductDTO p = this.MapperProduct.Map<WPProductDTO, ProductDTO>(item);
-
-                    p.Tags = this._export.WPTags
-                        .Where(x => x.object_id == p.ID)
-                        .Select(x => x.term_id)
-                        .Distinct()
-                        .OrderBy(x => x)
-                        .ToList();
-
-                    p.Categories = this._export.WPCategories
-                                .Where(x => x.object_id == p.ID)
-                                .Select(x => x.term_id)
-                                .Distinct()
-                                .OrderBy(x => x)
-                                .ToList();
 
                     result.Add(p);
                 }
