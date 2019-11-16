@@ -31,7 +31,6 @@ namespace WPExportContent
             );
 
             WPExportDTO exportDTO = new WPExportDTO();
-
             exportDTO.WPPosts = mySQLEngine.Select<WPPostDTO>(_wpQuery.GetWPPosts);
             exportDTO.WPTags = mySQLEngine.Select<WPTagDTO>(_wpQuery.GetWPTags);
             exportDTO.WPCategories = mySQLEngine.Select<WPCategoryDTO>(_wpQuery.GetWPCategories);
@@ -42,19 +41,29 @@ namespace WPExportContent
                 exportDTO.WPProducts = mySQLEngine.Select<WPProductDTO>(_wpQuery.GetWPProducts);
             }
 
+
+            string json = string.Empty;
+
             if (string.IsNullOrEmpty(_configurationOUTFile.DirtyExportFile) == false)
             {
                 DirtyWPToJson dirtyWPToJson = new DirtyWPToJson(exportDTO);
-                string json = dirtyWPToJson.CreateJSON(Newtonsoft.Json.Formatting.None);
-
+                json = dirtyWPToJson.CreateJSON(Newtonsoft.Json.Formatting.None);
                 FileHelper.WriteToFile(_configurationOUTFile.DirtyExportFile, json);
             }
 
+            WPToJson wPToJson = new WPToJson(exportDTO);
+            json = wPToJson.CreateJSON(Newtonsoft.Json.Formatting.Indented);
+
             if (string.IsNullOrEmpty(_configurationOUTFile.ExportFile) == false)
             {
-                WPToJson wPToJson = new WPToJson(exportDTO);
-                string json = wPToJson.CreateJSON(Newtonsoft.Json.Formatting.Indented);
                 FileHelper.WriteToFile(_configurationOUTFile.ExportFile, json);
+            }
+
+            if (string.IsNullOrEmpty(_configurationOUTFile.SQLServerConnection) == false)
+            {
+                ExportToSQLServer export = new ExportToSQLServer(_configurationOUTFile.SQLServerConnection);
+                WPExportResult wp = Newtonsoft.Json.JsonConvert.DeserializeObject<WPExportResult>(json);
+                var result = export.Run(wp).Result;
             }
         }
 
