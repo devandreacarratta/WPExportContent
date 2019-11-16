@@ -1,30 +1,25 @@
 ﻿using Dapper;
-using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace WPExportContent.Core.DataAccess
 {
-    public class MySQLEngine : ISQLEngine
+    public class SQLServerEngine : ISQLEngine
     {
         private string _connectionString = string.Empty;
         private IDbConnection _dbConnection = null;
 
-        public MySQLEngine(string connectionString)
+        public SQLServerEngine(string connectionString)
         {
             _connectionString = connectionString;
-        }
-
-        public MySQLEngine(string server, string database, string uid, string pwd)
-        {
-            _connectionString = Helper.GetMySQLConnectionString(server, database, uid, pwd);
         }
 
         public IDbConnection DBConnection(bool open = true)
         {
             if (_dbConnection == null)
             {
-                _dbConnection = new MySqlConnection(this._connectionString);
+                _dbConnection = new SqlConnection(this._connectionString);
             }
 
             if (open && _dbConnection.State == ConnectionState.Closed)
@@ -54,6 +49,7 @@ namespace WPExportContent.Core.DataAccess
             }
 
         }
+
 
     }
 }
