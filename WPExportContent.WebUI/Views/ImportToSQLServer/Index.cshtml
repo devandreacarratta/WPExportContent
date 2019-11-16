@@ -1,0 +1,43 @@
+﻿@model WPExportContent.WebUI.Models.ImportToSQLServerDTO
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<h4>Informations are NOT stored!!!</h4>
+
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		@using (Html.BeginForm("ConvertJSONToSQL", "ImportToSQLServer", FormMethod.Post, new
+		{
+			enctype = "multipart/form-data"
+		}))
+		{
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="SQLConnectionString" class="control-label"></label>
+				<input asp-for="SQLConnectionString" class="form-control" />
+				<span asp-validation-for="SQLConnectionString" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="contents" class="control-label"></label>
+				<input asp-for="contents" class="form-control" type="file" />
+				<span asp-validation-for="contents" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		}
+	</div>
+</div>
+
+<div>
+	<h4>Informations are NOT stored!!!</h4>
+</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
