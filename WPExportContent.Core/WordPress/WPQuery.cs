@@ -18,11 +18,43 @@
             }
         }
 
+        public string GetWPPostChildren
+        {
+            get
+            {
+                string result = $@"SELECT P.* 
+	                FROM {_tablePrefix}posts AS P
+    	                INNER JOIN {_tablePrefix}posts AS PP
+        	                ON PP.ID = p.post_parent
+                    WHERE 
+    	                PP.post_status ='publish' 
+                        AND PP.post_type= 'post'";
+
+                return result;
+            }
+        }
+
         public string GetWPProducts
         {
             get
             {
                 string result = $@"SELECT * FROM {_tablePrefix}posts WHERE post_status ='publish' AND post_type= 'product'";
+
+                return result;
+            }
+        }
+
+        public string GetWPProductChildren
+        {
+            get
+            {
+                string result = $@"SELECT P.* 
+	                FROM {_tablePrefix}posts AS P
+    	                INNER JOIN {_tablePrefix}posts AS PP
+        	                ON PP.ID = p.post_parent
+                    WHERE 
+    	                PP.post_status ='publish' 
+                        AND PP.post_type= 'product'";
 
                 return result;
             }
