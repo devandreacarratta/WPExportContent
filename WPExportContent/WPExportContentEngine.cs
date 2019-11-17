@@ -32,6 +32,7 @@ namespace WPExportContent
 
             WPExportDTO exportDTO = new WPExportDTO();
             exportDTO.WPPosts = mySQLEngine.Select<WPPostDTO>(_wpQuery.GetWPPosts);
+            exportDTO.WPPostChildren = mySQLEngine.Select<WPPostDTO>(_wpQuery.GetWPPostChildren);
             exportDTO.WPTags = mySQLEngine.Select<WPTagDTO>(_wpQuery.GetWPTags);
             exportDTO.WPCategories = mySQLEngine.Select<WPCategoryDTO>(_wpQuery.GetWPCategories);
             exportDTO.WPUsers = mySQLEngine.Select<WPUserDTO>(_wpQuery.GetWPUsers);
@@ -39,6 +40,7 @@ namespace WPExportContent
             if (_wpConfigurationPluginExportDTO.WooCommerce)
             {
                 exportDTO.WPProducts = mySQLEngine.Select<WPProductDTO>(_wpQuery.GetWPProducts);
+                exportDTO.WPProductChildren = mySQLEngine.Select<WPProductDTO>(_wpQuery.GetWPProductChildren);
             }
 
 
