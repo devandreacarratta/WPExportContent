@@ -14,11 +14,13 @@ namespace WPExportContent.Core.Export
             WPDirtyExportResult dirtyExport = new WPDirtyExportResult()
             {
                 Categories = this._export.WPCategories,
-                Products = this._export.WPProducts,
+                PostChildren = this._export.WPPostChildren,
+                PostMeta = this._export.WPPostsMeta,
                 Posts = this._export.WPPosts,
+                ProductChildren = this._export.WPProductChildren,
+                Products = this._export.WPProducts,
                 Tags = this._export.WPTags,
                 Users = this._export.WPUsers,
-                PostMeta = this._export.WPPostsMeta,
             };
 
             string result = Newtonsoft.Json.JsonConvert.SerializeObject(dirtyExport, formatting);

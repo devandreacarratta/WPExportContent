@@ -115,7 +115,19 @@ namespace WPExportContent.Core.Export
         {
             List<PostDTO> result = new List<PostDTO>();
 
-            foreach (var item in this._export.WPPosts)
+            List<WPPostDTO> items = new List<WPPostDTO>();
+            items.AddRange(this._export.WPPosts);
+            if (this._export.WPPostChildren != null)
+            {
+                items.AddRange(this._export.WPPostChildren);
+            }
+
+            items = items
+                .OrderBy(x => x.post_parent)
+                .Select(x => x)
+                .ToList();
+
+            foreach (var item in items)
             {
                 bool skipItem = result
                     .Where(x => x.ID == item.ID)
@@ -214,7 +226,20 @@ namespace WPExportContent.Core.Export
             if (this._export.WPProducts != null)
             {
 
-                foreach (var item in this._export.WPProducts)
+                List<WPProductDTO> items = new List<WPProductDTO>();
+                items.AddRange(this._export.WPProducts);
+                if (this._export.WPProductChildren != null)
+                {
+                    items.AddRange(this._export.WPProductChildren);
+                }
+
+                items = items
+                    .OrderBy(x => x.post_parent)
+                    .Select(x => x)
+                    .ToList();
+
+
+                foreach (var item in items)
                 {
                     bool skipItem = result
                         .Where(x => x.ID == item.ID)
