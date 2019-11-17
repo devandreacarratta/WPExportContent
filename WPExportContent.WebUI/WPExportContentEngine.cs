@@ -1,5 +1,4 @@
 ﻿using System;
-using WPExportContent.Core.DataAccess;
 using WPExportContent.Core.DTO;
 using WPExportContent.Core.Export;
 using WPExportContent.Core.Plugin;
@@ -23,24 +22,24 @@ namespace WPExportContent.WebUI
 
         public string DoWork()
         {
-            MySQLEngine mySQLEngine = new MySQLEngine(
-                _wpToJsonDTO.WPSourceDBHost,
-                _wpToJsonDTO.WPSourceDBName,
-                _wpToJsonDTO.WPSourceDBUser,
-                _wpToJsonDTO.WPSourceDBPassword
-            );
 
-            WPExportDTO exportDTO = new WPExportDTO();
-
-            exportDTO.WPPosts = mySQLEngine.Select<WPPostDTO>(_wpQuery.GetWPPosts);
-            exportDTO.WPTags = mySQLEngine.Select<WPTagDTO>(_wpQuery.GetWPTags);
-            exportDTO.WPCategories = mySQLEngine.Select<WPCategoryDTO>(_wpQuery.GetWPCategories);
-            exportDTO.WPUsers = mySQLEngine.Select<WPUserDTO>(_wpQuery.GetWPUsers);
-
-            if (Array.IndexOf(_wpToJsonDTO.PluginExport, ListOfPlugin.WooCommerce) != -1)
+            WPConfigurationSourceDTO configurationSource = new WPConfigurationSourceDTO()
             {
-                exportDTO.WPProducts = mySQLEngine.Select<WPProductDTO>(_wpQuery.GetWPProducts);
-            }
+                DB_HOST = this._wpToJsonDTO.WPSourceDBHost,
+                DB_NAME = this._wpToJsonDTO.WPSourceDBName,
+                DB_PASSWORD = this._wpToJsonDTO.WPSourceDBPassword,
+                DB_USER = this._wpToJsonDTO.WPSourceDBUser,
+                TABLE_PREFIX = this._wpToJsonDTO.WPSourceDBTablePrefix,
+            };
+
+            WPConfigurationPluginExportDTO configurationPluginExport = new WPConfigurationPluginExportDTO()
+            {
+                WooCommerce = (Array.IndexOf(this._wpToJsonDTO.PluginExport, ListOfPlugin.WooCommerce) != -1),
+                Yoast = (Array.IndexOf(this._wpToJsonDTO.PluginExport, ListOfPlugin.Yoast) != -1)
+            };
+
+
+            WPExportDTO exportDTO = WPExportEngine.RunAllQueries(configurationSource, configurationPluginExport);
 
             Newtonsoft.Json.Formatting formatting = Newtonsoft.Json.Formatting.None;
             if (this._wpToJsonDTO.JSONIndented)
@@ -48,7 +47,10 @@ namespace WPExportContent.WebUI
                 formatting = Newtonsoft.Json.Formatting.Indented;
             }
 
-            WPToJson wPToJson = new WPToJson(exportDTO);
+            WPToJson wPToJson = new WPToJson(exportDTO) 
+            {
+                ExportSeoWithYoast = configurationPluginExport.Yoast
+            };
             return wPToJson.CreateJSON(formatting);
         }
 

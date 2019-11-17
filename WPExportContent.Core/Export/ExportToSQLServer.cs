@@ -13,12 +13,13 @@ namespace WPExportContent.Core.Export
     public enum ExportToSQLServerTable
     {
         Categories,
-        Post,
         ContentCategories,
         ContentTags,
+        Post,
         Products,
+        SeoMeta,
         Tags,
-        Users
+        Users,
     }
 
     public class ExportToSQLServer
@@ -49,6 +50,7 @@ namespace WPExportContent.Core.Export
                 long products = await this.SaveProductsAsync(conn, wp.Products);
                 long tags = await this.SaveTagsAsync(conn, wp.Tags);
                 long users = await this.SaveUsersAsync(conn, wp.Users);
+                long seos = await this.SaveSeoMetaAsync(conn, wp.SeoMeta);
 
                 result.Add(ExportToSQLServerTable.Categories, categories);
                 result.Add(ExportToSQLServerTable.Post, post);
@@ -57,6 +59,7 @@ namespace WPExportContent.Core.Export
                 result.Add(ExportToSQLServerTable.Products, products);
                 result.Add(ExportToSQLServerTable.Tags, tags);
                 result.Add(ExportToSQLServerTable.Users, users);
+                result.Add(ExportToSQLServerTable.SeoMeta, seos);
             }
 
             return result;
@@ -130,8 +133,6 @@ namespace WPExportContent.Core.Export
             return result;
         }
 
-
-
         private async Task<long> SaveUsersAsync(SqlConnection conn, IEnumerable<UserDTO> users)
         {
 
@@ -147,8 +148,6 @@ namespace WPExportContent.Core.Export
             return result;
         }
 
-
-
         private async Task<long> SaveProductsAsync(SqlConnection conn, IEnumerable<ProductDTO> products)
         {
 
@@ -162,9 +161,6 @@ namespace WPExportContent.Core.Export
             return result;
         }
 
-
-
-
         private async Task<long> SavePostAsync(SqlConnection conn, IEnumerable<PostDTO> posts)
         {
 
@@ -173,6 +169,18 @@ namespace WPExportContent.Core.Export
             foreach (var item in posts)
             {
                 result += await conn.ExecuteAsync(SQLServerQuery.INSERT_POSTS, item);
+            }
+
+            return result;
+        }
+
+        public async Task<long> SaveSeoMetaAsync(SqlConnection conn, IEnumerable<SeoDTO> seo)
+        {
+            long result = 0;
+
+            foreach (var item in seo)
+            {
+                result += await conn.ExecuteAsync(SQLServerQuery.INSERT_SEOMETA, item);
             }
 
             return result;

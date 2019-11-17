@@ -12,5 +12,7 @@ namespace WPExportContent.Core.DTO
         public IEnumerable<WPProductDTO> WPProducts { get; set; }
         public IEnumerable<WPPostMetaDTO> WPPostsMeta { get; set; }
         public IEnumerable<WPProductDTO> WPProductChildren { get; set; }
+
+       
     }
 }

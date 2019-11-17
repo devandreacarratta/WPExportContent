@@ -1,5 +1,4 @@
-﻿using WPExportContent.Core.DataAccess;
-using WPExportContent.Core.DTO;
+﻿using WPExportContent.Core.DTO;
 using WPExportContent.Core.Export;
 using WPExportContent.Core.WordPress;
 
@@ -8,7 +7,7 @@ namespace WPExportContent
 
     public class WPExportContentEngine
     {
-        private WPQuery _wpQuery = null;
+
         private WPConfigurationSourceDTO _wpSource = null;
         private WPConfigurationOUTFileDTO _configurationOUTFile = null;
         private WPConfigurationPluginExportDTO _wpConfigurationPluginExportDTO = null;
@@ -16,34 +15,15 @@ namespace WPExportContent
         public WPExportContentEngine()
         {
             _wpSource = Configuration.GetWPSourceDTO();
-            _wpQuery = new WPQuery(_wpSource.TABLE_PREFIX);
             _configurationOUTFile = Configuration.GetOUTFileDTO();
             _wpConfigurationPluginExportDTO = Configuration.GetPluginExportDTO();
         }
 
         public void DoWork()
         {
-            MySQLEngine mySQLEngine = new MySQLEngine(
-                _wpSource.DB_HOST,
-                _wpSource.DB_NAME,
-                _wpSource.DB_USER,
-                _wpSource.DB_PASSWORD
-            );
-
-            WPExportDTO exportDTO = new WPExportDTO();
-            exportDTO.WPPosts = mySQLEngine.Select<WPPostDTO>(_wpQuery.GetWPPosts);
-            exportDTO.WPPostChildren = mySQLEngine.Select<WPPostDTO>(_wpQuery.GetWPPostChildren);
-            exportDTO.WPTags = mySQLEngine.Select<WPTagDTO>(_wpQuery.GetWPTags);
-            exportDTO.WPCategories = mySQLEngine.Select<WPCategoryDTO>(_wpQuery.GetWPCategories);
-            exportDTO.WPUsers = mySQLEngine.Select<WPUserDTO>(_wpQuery.GetWPUsers);
-            exportDTO.WPPostsMeta = mySQLEngine.Select<WPPostMetaDTO>(_wpQuery.GetWPPostMeta);
-
-            if (_wpConfigurationPluginExportDTO.WooCommerce)
-            {
-                exportDTO.WPProducts = mySQLEngine.Select<WPProductDTO>(_wpQuery.GetWPProducts);
-                exportDTO.WPProductChildren = mySQLEngine.Select<WPProductDTO>(_wpQuery.GetWPProductChildren);
-            }
-
+            WPExportDTO exportDTO = WPExportEngine.RunAllQueries(
+                _wpSource,
+                _wpConfigurationPluginExportDTO);
 
             string json = string.Empty;
 

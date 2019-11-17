@@ -1,6 +1,6 @@
 ﻿namespace WPExportContent.Core.WordPress
 {
-	public class WPQuery
+    public class WPQuery
 	{
 		private string _tablePrefix = "";
 		public WPQuery(string tablePrefix)
@@ -113,7 +113,7 @@
 		{
 			get
 			{
-				   string result = $@"SELECT PM.* 
+				string result = $@"SELECT PM.* 
 					FROM {_tablePrefix}postmeta AS PM 
 						 INNER JOIN {_tablePrefix}posts AS P 
 						ON P.ID = PM.post_id  
