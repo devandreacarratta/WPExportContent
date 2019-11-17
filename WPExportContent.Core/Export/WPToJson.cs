@@ -185,7 +185,7 @@ namespace WPExportContent.Core.Export
                     .ToList();
 
 
-                foreach (var item in this._export.WPProducts)
+                foreach (var item in items)
                 {
                     bool skipItem = result
                         .Where(x => x.ID == item.ID)
