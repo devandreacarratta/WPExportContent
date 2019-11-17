@@ -18,6 +18,10 @@ namespace WPExportContent.Core
 
         public class Posts
         {
+
+            public class PostStatus{
+                public const string PUBLISH = "publish";
+            }
             public class PostType
             {
                 public const string POST = "post";
