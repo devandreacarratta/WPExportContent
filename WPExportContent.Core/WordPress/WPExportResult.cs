@@ -16,5 +16,7 @@ namespace WPExportContent.Core.WordPress
 
         public IEnumerable<ContentCategoriesDTO> ContentCategories { get; set; }
         public IEnumerable<ContentTagsDTO> ContentTags { get; set; }
+
+        public IEnumerable<SeoDTO> SeoMeta { get; set; }
     }
 }

@@ -17,7 +17,8 @@ namespace WPExportContent.Core.Export
                 Products = this._export.WPProducts,
                 Posts = this._export.WPPosts,
                 Tags = this._export.WPTags,
-                Users = this._export.WPUsers
+                Users = this._export.WPUsers,
+                PostMeta = this._export.WPPostsMeta,
             };
 
             string result = Newtonsoft.Json.JsonConvert.SerializeObject(dirtyExport, formatting);

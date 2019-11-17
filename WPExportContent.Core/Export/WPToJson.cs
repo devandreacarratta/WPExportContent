@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WPExportContent.Core.DTO;
 using WPExportContent.Core.DTO.Output;
@@ -8,9 +9,12 @@ namespace WPExportContent.Core.Export
 {
     public class WPToJson : BaseWPExportData
     {
+
+        public bool ExportSeoWithYoast { get; set; }
+
         public WPToJson(WPExportDTO export) : base(export)
         {
-
+            ExportSeoWithYoast = false;
         }
 
         public string CreateJSON(Newtonsoft.Json.Formatting formatting)
@@ -27,9 +31,59 @@ namespace WPExportContent.Core.Export
 
             export.ContentCategories = FillContentCategories();
             export.ContentTags = FillContentTags();
-      
+
+            if (ExportSeoWithYoast)
+            {
+                export.SeoMeta = FillSeoMetaWithYoast();
+            }
+
             string result = Newtonsoft.Json.JsonConvert.SerializeObject(export, formatting);
             return result;
+        }
+
+        private IEnumerable<SeoDTO> FillSeoMetaWithYoast()
+        {
+            string[] keys = new string[] { Settings.PostMeta.Yoast.FOCUS_KW, Settings.PostMeta.Yoast.META_DESC };
+
+            var yoast = this._export.WPPostsMeta
+                .Where(x => Array.IndexOf(keys, x.meta_key) != -1)
+                .Select(x => x)
+                .ToList();
+
+            SortedDictionary<int, SeoDTO> dict = new SortedDictionary<int, SeoDTO>();
+
+            foreach (var item in yoast)
+            {
+                SeoDTO dummy;
+
+                if (dict.TryGetValue(item.post_id, out dummy) == false)
+                {
+                    SeoDTO seo = new SeoDTO()
+                    {
+                        PostID = item.post_id
+                    };
+
+                    dict.Add(item.post_id, seo);
+                }
+
+                switch (item.meta_key)
+                {
+                    case Settings.PostMeta.Yoast.FOCUS_KW:
+                        {
+                            dict[item.post_id].FocusKW = item.meta_value;
+                            break;
+                        }
+                    case Settings.PostMeta.Yoast.META_DESC:
+                        {
+                            dict[item.post_id].MetaDescription = item.meta_value;
+                            break;
+                        }
+                }
+            }
+
+            return dict
+                .Select(x => x.Value)
+                .OrderBy(x => x.PostID);
         }
 
         private IEnumerable<UserDTO> FillUsers()

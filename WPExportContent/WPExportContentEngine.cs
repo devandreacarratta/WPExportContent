@@ -35,6 +35,7 @@ namespace WPExportContent
             exportDTO.WPTags = mySQLEngine.Select<WPTagDTO>(_wpQuery.GetWPTags);
             exportDTO.WPCategories = mySQLEngine.Select<WPCategoryDTO>(_wpQuery.GetWPCategories);
             exportDTO.WPUsers = mySQLEngine.Select<WPUserDTO>(_wpQuery.GetWPUsers);
+            exportDTO.WPPostsMeta = mySQLEngine.Select<WPPostMetaDTO>(_wpQuery.GetWPPostMeta);
 
             if (_wpConfigurationPluginExportDTO.WooCommerce)
             {
@@ -51,7 +52,11 @@ namespace WPExportContent
                 FileHelper.WriteToFile(_configurationOUTFile.DirtyExportFile, json);
             }
 
-            WPToJson wPToJson = new WPToJson(exportDTO);
+            WPToJson wPToJson = new WPToJson(exportDTO)
+            {
+                ExportSeoWithYoast = _wpConfigurationPluginExportDTO.Yoast
+            };
+
             json = wPToJson.CreateJSON(Newtonsoft.Json.Formatting.Indented);
 
             if (string.IsNullOrEmpty(_configurationOUTFile.ExportFile) == false)

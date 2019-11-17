@@ -12,7 +12,7 @@
         {
             get
             {
-                string result = $@"SELECT * FROM {_tablePrefix}posts WHERE post_status ='publish' AND post_type= 'post'";
+                string result = $@"SELECT * FROM {_tablePrefix}posts WHERE post_status ='publish' AND post_type= '{Settings.Posts.PostType.POST}'";
 
                 return result;
             }
@@ -22,7 +22,7 @@
         {
             get
             {
-                string result = $@"SELECT * FROM {_tablePrefix}posts WHERE post_status ='publish' AND post_type= 'product'";
+                string result = $@"SELECT * FROM {_tablePrefix}posts WHERE post_status ='publish' AND post_type= '{Settings.Posts.PostType.PRODUCT}'";
 
                 return result;
             }
@@ -51,7 +51,7 @@
                             ON T.term_id = R.term_taxonomy_id 
                         INNER JOIN  {_tablePrefix}term_taxonomy TT 
                             ON TT.term_id = T.term_id 
-                    WHERE TT.taxonomy IN( 'post_tag' , 'product_tag') ";
+                    WHERE TT.taxonomy IN( '{Settings.TermTaxonomy.Taxonomy.POST_TAG}' , '{Settings.TermTaxonomy.Taxonomy.PRODUCT_TAG}') ";
 
                 return result;
             }
@@ -71,7 +71,22 @@
                             ON T.term_id = R.term_taxonomy_id 
                         INNER JOIN  {_tablePrefix}term_taxonomy TT 
                             ON TT.term_id = T.term_id 
-                    WHERE TT.taxonomy IN( 'category' , 'product_cat') ";
+                    WHERE TT.taxonomy IN( '{Settings.TermTaxonomy.Taxonomy.POST_TAG}' , '{Settings.TermTaxonomy.Taxonomy.PRODUCT_TAG}') ";
+
+                return result;
+            }
+        }
+
+        public string GetWPPostMeta
+        {
+            get
+            {
+                   string result = $@"SELECT PM.* 
+                    FROM {_tablePrefix}postmeta AS PM 
+                         INNER JOIN {_tablePrefix}posts AS P 
+                        ON P.ID = PM.post_id  
+                        WHERE P.post_status = 'publish' 
+                            AND P.post_type IN('{Settings.Posts.PostType.POST}', '{Settings.Posts.PostType.PRODUCT}')";
 
                 return result;
             }

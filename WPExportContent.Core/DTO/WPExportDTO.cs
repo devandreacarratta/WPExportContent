@@ -9,5 +9,6 @@ namespace WPExportContent.Core.DTO
         public IEnumerable<WPCategoryDTO> WPCategories { get; set; }
         public IEnumerable<WPUserDTO> WPUsers { get; set; }
         public IEnumerable<WPProductDTO> WPProducts { get; set; }
+        public IEnumerable<WPPostMetaDTO> WPPostsMeta { get; set; }
     }
 }
