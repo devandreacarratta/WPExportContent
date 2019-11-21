@@ -25,7 +25,7 @@
 				string result = $@"SELECT P.* 
 					FROM {_tablePrefix}posts AS P
 						INNER JOIN {_tablePrefix}posts AS PP
-							ON PP.ID = p.post_parent
+							ON PP.ID = P.post_parent
 					WHERE 
 						PP.post_status ='{Settings.Posts.PostStatus.PUBLISH}' 
 						AND PP.post_type= '{Settings.Posts.PostType.POST}'";
@@ -51,7 +51,7 @@
 				string result = $@"SELECT P.* 
 					FROM {_tablePrefix}posts AS P
 						INNER JOIN {_tablePrefix}posts AS PP
-							ON PP.ID = p.post_parent
+							ON PP.ID = P.post_parent
 					WHERE 
 						PP.post_status ='{Settings.Posts.PostStatus.PUBLISH}' 
 						AND PP.post_type= '{Settings.Posts.PostType.PRODUCT}'";
