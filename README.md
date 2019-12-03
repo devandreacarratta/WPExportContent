@@ -15,7 +15,8 @@ NetCore console app - fast test with appsettings.json for setting
 
 {
 	"PluginExport": {
-		"WooCommerce": true
+		"WooCommerce": true,
+		"Yoast": true
 	},
 	"WPSource": {
 		"DB_NAME": "wpexportcontent",

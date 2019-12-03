@@ -15,6 +15,7 @@ namespace WPExportContent.Core.Export
             {
                 Categories = this._export.WPCategories,
                 PostChildren = this._export.WPPostChildren,
+                PostMeta = this._export.WPPostsMeta,
                 Posts = this._export.WPPosts,
                 ProductChildren = this._export.WPProductChildren,
                 Products = this._export.WPProducts,

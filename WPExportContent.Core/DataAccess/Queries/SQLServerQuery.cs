@@ -186,5 +186,19 @@ INSERT INTO [dbo].[Posts]
            @PostMimeType,
            @CommentCount)";
 
+        public const string INSERT_SEOMETA = @"INSERT INTO [dbo].[SeoMeta]
+                   ([RowID]
+                   ,[RowCreationDateUTC]
+                   ,[PostID]
+                   ,[FocusKW]
+                   ,[MetaDescription])
+             VALUES
+                   (@RowID
+                   ,@RowCreationDateUTC
+                   ,@PostID 
+                   ,@FocusKW 
+                   ,@MetaDescription)";
+
     }
+
 }
