@@ -10,18 +10,6 @@ using WPExportContent.Core.WordPress;
 namespace WPExportContent.Core.Export
 {
 
-    public enum ExportToSQLServerTable
-    {
-        Categories,
-        ContentCategories,
-        ContentTags,
-        Post,
-        Products,
-        SeoMeta,
-        Tags,
-        Users,
-    }
-
     public class ExportToSQLServer
     {
 
@@ -37,9 +25,9 @@ namespace WPExportContent.Core.Export
             _sqlConnection = _sqlEngine.DBConnection() as SqlConnection;
         }
 
-        public async Task<SortedDictionary<ExportToSQLServerTable, long>> Run(WPExportResult wp)
+        public async Task<SortedDictionary<ExportTable, long>> Run(WPExportResult wp)
         {
-            SortedDictionary<ExportToSQLServerTable, long> result = new SortedDictionary<ExportToSQLServerTable, long>();
+            SortedDictionary<ExportTable, long> result = new SortedDictionary<ExportTable, long>();
 
             using (var conn = this._sqlConnection)
             {
@@ -52,14 +40,14 @@ namespace WPExportContent.Core.Export
                 long users = await this.SaveUsersAsync(conn, wp.Users);
                 long seos = await this.SaveSeoMetaAsync(conn, wp.SeoMeta);
 
-                result.Add(ExportToSQLServerTable.Categories, categories);
-                result.Add(ExportToSQLServerTable.Post, post);
-                result.Add(ExportToSQLServerTable.ContentCategories, contentCategories);
-                result.Add(ExportToSQLServerTable.ContentTags, contentTags);
-                result.Add(ExportToSQLServerTable.Products, products);
-                result.Add(ExportToSQLServerTable.Tags, tags);
-                result.Add(ExportToSQLServerTable.Users, users);
-                result.Add(ExportToSQLServerTable.SeoMeta, seos);
+                result.Add(ExportTable.Categories, categories);
+                result.Add(ExportTable.Post, post);
+                result.Add(ExportTable.ContentCategories, contentCategories);
+                result.Add(ExportTable.ContentTags, contentTags);
+                result.Add(ExportTable.Products, products);
+                result.Add(ExportTable.Tags, tags);
+                result.Add(ExportTable.Users, users);
+                result.Add(ExportTable.SeoMeta, seos);
             }
 
             return result;
