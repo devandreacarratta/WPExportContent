@@ -10,7 +10,7 @@ using WPExportContent.Core.WordPress;
 namespace WPExportContent.Core.Export
 {
 
-    public class ExportToSQLServer
+    public class ExportToSQLServer 
     {
 
         private string _connection = null;
@@ -85,19 +85,6 @@ namespace WPExportContent.Core.Export
         {
 
             long result = 0;
-
-            //    string query = @"DELETE FROM [dbo].[ContentTags] WHERE [RowID] = @RowID;
-            //          INSERT INTO[dbo].[ContentTags]
-            //([RowID]
-            //          ,[RowCreationDateUTC]
-            //          ,[IDContent]
-            //          ,[IDTag])
-            //    VALUES
-            //          (@RowID
-            //          , @RowCreationDateUTC
-            //          , @IDContent
-            //          , @IDTag)";
-
 
             foreach (var item in contentTags)
             {
