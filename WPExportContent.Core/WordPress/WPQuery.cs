@@ -1,6 +1,6 @@
 ﻿namespace WPExportContent.Core.WordPress
 {
-    public class WPQuery
+	public class WPQuery
 	{
 		private string _tablePrefix = "";
 		public WPQuery(string tablePrefix)
