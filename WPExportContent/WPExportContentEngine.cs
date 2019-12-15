@@ -1,4 +1,5 @@
-﻿using WPExportContent.Core.DTO;
+﻿using WPExportContent.Core.DataAccess;
+using WPExportContent.Core.DTO;
 using WPExportContent.Core.Export;
 using WPExportContent.Core.WordPress;
 
@@ -46,10 +47,21 @@ namespace WPExportContent
                 FileHelper.WriteToFile(_configurationOUTFile.ExportFile, json);
             }
 
+            WPExportResult wp = Newtonsoft.Json.JsonConvert.DeserializeObject<WPExportResult>(json);
+            ISQLEngine engine = null;
+
             if (string.IsNullOrEmpty(_configurationOUTFile.SQLServerConnection) == false)
             {
-                ExportToSQLServer export = new ExportToSQLServer(_configurationOUTFile.SQLServerConnection);
-                WPExportResult wp = Newtonsoft.Json.JsonConvert.DeserializeObject<WPExportResult>(json);
+                engine = new SQLServerEngine(_configurationOUTFile.SQLServerConnection);
+                ExportToDatabase export = new ExportToDatabase(engine);
+                var result = export.Run(wp).Result;
+            }
+
+
+            if (string.IsNullOrEmpty(_configurationOUTFile.MySQLServerConnection) == false)
+            {
+                engine = new MySQLEngine(_configurationOUTFile.MySQLServerConnection);
+                ExportToDatabase export = new ExportToDatabase(engine);
                 var result = export.Run(wp).Result;
             }
         }
