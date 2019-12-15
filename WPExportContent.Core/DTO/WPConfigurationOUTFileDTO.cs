@@ -6,5 +6,6 @@
         public string ExportFile { get; set; }
 
         public string SQLServerConnection { get; set; }
+public string MySQLServerConnection { get; set; }
     }
 }
