@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 
 namespace WPExportContent.Core.DataAccess
@@ -18,8 +19,8 @@ namespace WPExportContent.Core.DataAccess
         public IDbConnection DBConnection(bool open = true)
         {
             if (_dbConnection == null)
-            {
-                _dbConnection = new SqlConnection(this._connectionString);
+            {   
+                   _dbConnection = new SqlConnection(this._connectionString);
             }
 
             if (open && _dbConnection.State == ConnectionState.Closed)

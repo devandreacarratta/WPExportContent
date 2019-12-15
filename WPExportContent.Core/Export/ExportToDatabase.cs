@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using WPExportContent.Core.DataAccess;
@@ -10,26 +11,23 @@ using WPExportContent.Core.WordPress;
 namespace WPExportContent.Core.Export
 {
 
-    public class ExportToSQLServer 
+    public class ExportToDatabase
     {
 
-        private string _connection = null;
-        private SQLServerEngine _sqlEngine = null;
+        private ISQLEngine _engine = null;
+        private IDbConnection _dbConnection;
 
-        private SqlConnection _sqlConnection;
-
-        public ExportToSQLServer(string connection)
+        public ExportToDatabase(ISQLEngine engine)
         {
-            _connection = connection;
-            _sqlEngine = new SQLServerEngine(connection);
-            _sqlConnection = _sqlEngine.DBConnection() as SqlConnection;
+            _engine = engine;
+            _dbConnection = _engine.DBConnection() ;
         }
 
         public async Task<SortedDictionary<ExportTable, long>> Run(WPExportResult wp)
         {
             SortedDictionary<ExportTable, long> result = new SortedDictionary<ExportTable, long>();
 
-            using (var conn = this._sqlConnection)
+            using (var conn = this._dbConnection)
             {
                 long categories = await this.SaveCategoriesAsync(conn, wp.Categories);
                 long post = await this.SavePostAsync(conn, wp.Posts);
@@ -53,20 +51,20 @@ namespace WPExportContent.Core.Export
             return result;
         }
 
-        private async Task<long> SaveCategoriesAsync(SqlConnection conn, IEnumerable<CategoryDTO> categories)
+        private async Task<long> SaveCategoriesAsync(IDbConnection conn, IEnumerable<CategoryDTO> categories)
         {
 
             long result = 0;
 
             foreach (var item in categories)
             {
-                result += await conn.ExecuteAsync(SQLServerQuery.INSERT_CATEGORIES, item);
+                result += await conn.ExecuteAsync(ContentQuery.INSERT_CATEGORIES, item);
             }
 
             return result;
         }
 
-        private async Task<long> SaveContentCategoriesAsync(SqlConnection conn, IEnumerable<ContentCategoriesDTO> contentCategories)
+        private async Task<long> SaveContentCategoriesAsync(IDbConnection conn, IEnumerable<ContentCategoriesDTO> contentCategories)
         {
 
             long result = 0;
@@ -75,26 +73,26 @@ namespace WPExportContent.Core.Export
 
             foreach (var item in contentCategories)
             {
-                result += await conn.ExecuteAsync(SQLServerQuery.INSERT_CONTENT_CATEGORIES, item);
+                result += await conn.ExecuteAsync(ContentQuery.INSERT_CONTENT_CATEGORIES, item);
             }
 
             return result;
         }
 
-        private async Task<long> SaveContentTagsAsync(SqlConnection conn, IEnumerable<ContentTagsDTO> contentTags)
+        private async Task<long> SaveContentTagsAsync(IDbConnection conn, IEnumerable<ContentTagsDTO> contentTags)
         {
 
             long result = 0;
 
             foreach (var item in contentTags)
             {
-                result += await conn.ExecuteAsync(SQLServerQuery.INSERT_CONTENT_TAGS, item);
+                result += await conn.ExecuteAsync(ContentQuery.INSERT_CONTENT_TAGS, item);
             }
 
             return result;
         }
 
-        private async Task<long> SaveTagsAsync(SqlConnection conn, IEnumerable<TagDTO> tags)
+        private async Task<long> SaveTagsAsync(IDbConnection conn, IEnumerable<TagDTO> tags)
         {
 
             long result = 0;
@@ -102,13 +100,13 @@ namespace WPExportContent.Core.Export
 
             foreach (var item in tags)
             {
-                result += await conn.ExecuteAsync(SQLServerQuery.INSERT_TAGS, item);
+                result += await conn.ExecuteAsync(ContentQuery.INSERT_TAGS, item);
             }
 
             return result;
         }
 
-        private async Task<long> SaveUsersAsync(SqlConnection conn, IEnumerable<UserDTO> users)
+        private async Task<long> SaveUsersAsync(IDbConnection conn, IEnumerable<UserDTO> users)
         {
 
             long result = 0;
@@ -117,45 +115,45 @@ namespace WPExportContent.Core.Export
 
             foreach (var item in users)
             {
-                result += await conn.ExecuteAsync(SQLServerQuery.INSERT_USERS, item);
+                result += await conn.ExecuteAsync(ContentQuery.INSERT_USERS, item);
             }
 
             return result;
         }
 
-        private async Task<long> SaveProductsAsync(SqlConnection conn, IEnumerable<ProductDTO> products)
+        private async Task<long> SaveProductsAsync(IDbConnection conn, IEnumerable<ProductDTO> products)
         {
 
             long result = 0;
 
             foreach (var item in products)
             {
-                result += await conn.ExecuteAsync(SQLServerQuery.INSERT_PRODUCTS, item);
+                result += await conn.ExecuteAsync(ContentQuery.INSERT_PRODUCTS, item);
             }
 
             return result;
         }
 
-        private async Task<long> SavePostAsync(SqlConnection conn, IEnumerable<PostDTO> posts)
+        private async Task<long> SavePostAsync(IDbConnection conn, IEnumerable<PostDTO> posts)
         {
 
             long result = 0;
 
             foreach (var item in posts)
             {
-                result += await conn.ExecuteAsync(SQLServerQuery.INSERT_POSTS, item);
+                result += await conn.ExecuteAsync(ContentQuery.INSERT_POSTS, item);
             }
 
             return result;
         }
 
-        public async Task<long> SaveSeoMetaAsync(SqlConnection conn, IEnumerable<SeoDTO> seo)
+        public async Task<long> SaveSeoMetaAsync(IDbConnection conn, IEnumerable<SeoDTO> seo)
         {
             long result = 0;
 
             foreach (var item in seo)
             {
-                result += await conn.ExecuteAsync(SQLServerQuery.INSERT_SEOMETA, item);
+                result += await conn.ExecuteAsync(ContentQuery.INSERT_SEOMETA, item);
             }
 
             return result;
