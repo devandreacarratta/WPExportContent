@@ -2,7 +2,7 @@
 
 namespace WPExportContent.WebUI.Models
 {
-    public class ImportToSQLServerDTO: BaseImportDTO
+    public class ImportToMySQLDTO : BaseImportDTO
     {
     }
 }
