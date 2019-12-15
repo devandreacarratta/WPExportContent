@@ -51,14 +51,7 @@ namespace WPExportContent.WebUI.Controllers
 
             string log = sb.ToString();
 
-            var baseImport = new ImportToSQLServerDTO()
-            {
-                Results = log
-            };
-
-            return View("Index", baseImport);
-
-
+            return View("Index");
         }    
 
         // GET: ImportToSQLServer
