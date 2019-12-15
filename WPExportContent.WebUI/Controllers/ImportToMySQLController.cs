@@ -11,10 +11,10 @@ using WPExportContent.WebUI.Models;
 
 namespace WPExportContent.WebUI.Controllers
 {
-    public class ImportToSQLServerController : Controller
+    public class ImportToMySQLController : Controller
     {
 
-        public async Task<IActionResult> ConvertJSONToSQL(ImportToSQLServerDTO values)
+        public async Task<IActionResult> ConvertJSONToSQL(ImportToMySQLDTO values)
         {
             if (values.contents.Length == 0)
             {
@@ -39,20 +39,21 @@ namespace WPExportContent.WebUI.Controllers
             }
 
 
-            ISQLEngine engine = new SQLServerEngine(values.ConnectionString);
-                        ExportToDatabase export = new ExportToDatabase(engine);
+            ISQLEngine engine = new MySQLEngine(values.ConnectionString);
+            ExportToDatabase export = new ExportToDatabase(engine);
             var result = await export.Run(wp);
 
             StringBuilder sb = new StringBuilder();
             foreach (var item in result)
             {
-                sb.AppendFormat("{0}: {1} {2} ", item.Key, item.Value, Environment.NewLine);
+                sb.AppendFormat("{0}: {1} {2} | ", item.Key, item.Value, Environment.NewLine);
             }
 
             string log = sb.ToString();
 
             return View("Index");
-        }    
+
+        }
 
         // GET: ImportToSQLServer
         public ActionResult Index()

@@ -1,17 +1,17 @@
-﻿@model WPExportContent.WebUI.Models.ImportToSQLServerDTO
+﻿@model WPExportContent.WebUI.Models.ImportToMySQLDTO
 
 @{
     ViewData["Title"] = "Index";
 }
 
-	<h1>ImportToSQLServer</h1>
+	<h1>ImportToMySQL</h1>
 
 <h4>Informations are NOT stored!!!</h4>
 
 <hr />
 <div class="row">
 	<div class="col-md-4">
-		@using (Html.BeginForm("ConvertJSONToSQL", "ImportToSQLServer", FormMethod.Post, new
+		@using (Html.BeginForm("ConvertJSONToSQL", "ImportToMySQL", FormMethod.Post, new
 		{
 			enctype = "multipart/form-data"
 		}))
@@ -31,8 +31,8 @@
 				<input type="submit" value="Create" class="btn btn-primary" />
 			</div>
 		}
-	</div>
-</div>
+			</div>
+		</div>
 
 <div>
 	<h4>Informations are NOT stored!!!</h4>

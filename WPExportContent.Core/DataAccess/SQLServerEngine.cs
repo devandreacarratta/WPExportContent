@@ -18,8 +18,8 @@ namespace WPExportContent.Core.DataAccess
         public IDbConnection DBConnection(bool open = true)
         {
             if (_dbConnection == null)
-            {
-                _dbConnection = new SqlConnection(this._connectionString);
+            {   
+                   _dbConnection = new SqlConnection(this._connectionString);
             }
 
             if (open && _dbConnection.State == ConnectionState.Closed)
