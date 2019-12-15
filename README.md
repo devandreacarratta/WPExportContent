@@ -27,7 +27,9 @@ NetCore console app - fast test with appsettings.json for setting
 	},
 	"OUTFile": {
 		"DirtyExportFile": "z:\\wpDirtyExportFile.json",
-		"ExportFile": "z:\\wpExportFile.json"
+		"ExportFile": "z:\\wpExportFile.json",
+		"SQLServerConnection": "",
+		"MySQLServerConnection": "Server=XXX;Database=XXX;Uid=XXX;Pwd=XXX;Port=3306"
 	}
 
 }
